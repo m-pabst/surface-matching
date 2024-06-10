@@ -11,8 +11,8 @@ def load_pcloud_normal_obj(path):
     # Scaling:
     pcd_obj.scale(0.001, center=(0, 0, 0))
     # Write adapted obj file
-    o3d.io.write_point_cloud("challenge/obj_new.ply", pcd_obj, True, True)
-    return cv2.ppf_match_3d.loadPLYSimple("challenge/obj_new.ply", 1)
+    o3d.io.write_point_cloud("data/obj_new.ply", pcd_obj, write_ascii=True, compressed=True)
+    return cv2.ppf_match_3d.loadPLYSimple("data/obj_new.ply", 1)
 
 def load_pcloud_normal_testscene(image_path,depth_path):
 
@@ -34,7 +34,7 @@ def load_pcloud_normal_testscene(image_path,depth_path):
         os.remove("data/scene.ply")
     else:
         print("The file does not exist ... Generate 3D Scene")
-    o3d.io.write_point_cloud("data/scene.ply", pcd_scene, True, True)
+    o3d.io.write_point_cloud("data/scene.ply", pcd_scene, write_ascii=True, compressed=True)
 
     return cv2.ppf_match_3d.loadPLYSimple("data/scene.ply", 1)
 
@@ -77,7 +77,7 @@ for i, result in enumerate(results):
 
 # Calculate the ADD metric for the predicted object pose
 # ADD: Average Distance of Model Points
-gt_path = "challenge/scene_gt.json"
+gt_path = "data/scene_gt.json"
 
 # Opening JSON file
 gt_data_raw = open(gt_path)
@@ -103,6 +103,6 @@ add = LA.norm(np.subtract(gt_pose @ pc_add.T, estim_pose @ pc_add.T).T) / num_po
 print(add) # 8.924970837069385
 
 # visualize the transformed object model with predicted 6d pose in the test scene.
-pcd_scene = o3d.io.read_point_cloud("challenge/scene.ply")
+pcd_scene = o3d.io.read_point_cloud("data/scene.ply")
 pcd_result = o3d.io.read_point_cloud("pose.ply")
 o3d.visualization.draw_geometries([pcd_result, pcd_scene])
