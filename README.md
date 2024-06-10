@@ -26,6 +26,14 @@ Modifier Properties --> Add Modifier --> Decimate --> Ratio to 0.025 --> Export 
 
 Result: File size reduction from 24,570 KB to 626 KB
 
+### Setup
+
+```´
+conda create -n sm_ppf python=3.8
+
+conda activate sm_ppf
+```
+
 ### Usage
 
 ```
